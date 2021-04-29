@@ -8,9 +8,34 @@ const router = new VueRouter({
             name: 'login',
             path: '/login',
             component: () => import('@/views/login.vue')
+        },
+        {
+            name: 'index',
+            path: '/index',
+            component: () => import('@/views/index.vue')
         }
-
     ]
+})
+
+
+
+// 前置导航守卫
+router.beforeEach((to, from, next) => {
+    // 逻辑
+    // 如果是去登入》去登入
+    // 如果不是去登入
+    //   a:验证有没有token,如果有token,继续往下总
+    //   b:没有token,去登录login
+    if (to.path == '/login') {
+        next()
+    } else {
+        let token = localStorage.getItem('linziyun_back')
+        if (token) {
+            next()
+        } else {
+            next({ name: 'login' })
+        }
+    }
 
 })
 export default router

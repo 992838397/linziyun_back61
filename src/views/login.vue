@@ -2,6 +2,12 @@
   <div class="login">
     <div class="container">
       <img src="@/assets/avatar.jpg" class="avatar" alt="" />
+      <!-- 
+        el-form 属性说明:
+        :model :  他是当前表单所绑定数据源对象,后期表单元素中绑定的户数,就是这个数据对象中某一个属性
+        他就是我们需要收集的表单数据对象
+        :reles:表单元素的验证规则
+       -->
       <el-form
         :model="loginForm"
         :rules="rules"
@@ -21,19 +27,22 @@
             prefix-icon="el-icon-key"
           ></el-input>
         </el-form-item>
-        <el-button type="primary" class="login-btn">主要按钮</el-button>
+        <el-button type="primary" class="login-btn" @click="login"
+          >登录</el-button
+        >
       </el-form>
     </div>
   </div>
 </template>
 
 <script>
+import { userLogin } from "@/apis/user";
 export default {
   data() {
     return {
       loginForm: {
-        username: "",
-        password: "",
+        username: "13035808046",
+        password: "116616",
       },
       rules: {
         username: [
@@ -56,6 +65,35 @@ export default {
         ],
       },
     };
+  },
+  methods: {
+    login() {
+      // 在防止用户犯错的前提下，尽可能让用户更早地发现并纠正错误。
+      // 我们在真正进行提交之前，应该根据用户的验证规则进行数据校验，如果校验通过才发起请求，否则中止本次请求并给出提示
+      // 表单有一个validate方法可以实现用户用户的校验，它要传入一个函数做为参数，当校验完成的时候，会将校验的结果以参数的形式传递给这个回调函数
+      // 细节:await要在最近的函数快里面加async,*u
+      this.$refs.loginForm.validate(async (valid, obj) => {
+        if (valid) {
+          let res = await userLogin(this.loginForm);
+          if (res.data.message == "登录成功") {
+            // 提示用户
+            this.$message("恭喜您,登录成功啦");
+            // 设置token,前置到导航使用
+            localStorage.setItem("linziyun_back", res.data.data.token);
+            // 跳转页面
+            this.$router.push({ name: "index" });
+          } else {
+            this.$message({
+              message: "登录失败,请重新登入哦",
+              type: "warning",
+            });
+          }
+        } else {
+          // 提示用户
+          this.$message.error("用户密码校验失败");
+        }
+      });
+    },
   },
 };
 </script>
