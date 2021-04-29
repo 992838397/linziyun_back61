@@ -45,11 +45,11 @@
               <i class="el-icon-location"></i>
               <span>文章管理</span>
             </template>
-            <el-menu-item index="2-1">
+            <el-menu-item index="postList">
               <i class="el-icon-location"></i>
               <span>文章列表</span>
             </el-menu-item>
-            <el-menu-item index="2-2">
+            <el-menu-item index="postPublish">
               <i class="el-icon-location"></i>
               <span>文章添加</span>
             </el-menu-item>
@@ -79,7 +79,10 @@
             <span> 退出</span>
           </div>
         </el-header>
-        <el-main>后台管理系统哦</el-main>
+        <el-main>
+          <!-- 路由渲染的地方 -->
+          <router-view></router-view>
+        </el-main>
       </el-container>
     </el-container>
   </div>

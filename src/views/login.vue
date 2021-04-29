@@ -6,7 +6,7 @@
         el-form 属性说明:
         :model :  他是当前表单所绑定数据源对象,后期表单元素中绑定的户数,就是这个数据对象中某一个属性
         他就是我们需要收集的表单数据对象
-        :reles:表单元素的验证规则
+        :reles:表单元素的验证规则 它用于规范某个元素的值的输入方式，它是一个对象，对象里面的每个成员就是一组(数组)验证规则 ,它是data的成员
        -->
       <el-form
         :model="loginForm"
@@ -14,6 +14,10 @@
         ref="loginForm"
         class="demo-ruleForm"
       >
+        <!-- 
+        el-form-item的属性说明
+        prop:指定验证规则的名称
+       -->
         <el-form-item prop="username">
           <el-input
             v-model="loginForm.username"

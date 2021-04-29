@@ -12,7 +12,27 @@ const router = new VueRouter({
         {
             name: 'index',
             path: '/index',
-            component: () => import('@/views/index.vue')
+            // 路由重定向
+            redirect: { name: 'hello' },
+            component: () => import('@/views/index.vue'),
+            // 嵌套路由
+            children: [
+                {
+                    name: 'hello',
+                    path: 'hello',
+                    component: () => import('@/views/hello.vue')
+                },
+                {
+                    name: 'postList',
+                    path: 'postList',
+                    component: () => import('@/views/post/postList.vue')
+                },
+                {
+                    name: 'postPublish',
+                    path: 'postPublish',
+                    component: () => import('@/views/post/postPublish.vue')
+                }
+            ]
         }
     ]
 })
