@@ -10,6 +10,7 @@
     <el-card class="box-card" style="margin-top: 20px">
       <!-- 表格 -->
       <el-table :data="postList" style="width: 100%" border>
+        <el-table-column type="index" width="50"> </el-table-column>
         <el-table-column prop="title" label="标题" width="480">
         </el-table-column>
 
@@ -43,7 +44,7 @@
         :page-sizes="[4, 6, 8, 10]"
         :page-size="4"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="25"
+        :total="100"
       >
       </el-pagination>
     </el-card>
